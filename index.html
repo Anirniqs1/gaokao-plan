@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>高考冲刺计划</title><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="高考计划"><meta name="theme-color" content="#000000"><meta name="color-scheme" content="dark">
+<style>
+:root{--bg:#000;--cd:#0a1517;--tx:#e6f4f4;--mu:#8db4b7;--bd:#17383c;--ac:#2dd4cf;--ok:#5a8286;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.w{max-width:640px;margin:0 auto;padding:16px 14px 40px}h1{font-size:20px;margin:4px 0 2px}.mu{color:var(--mu);font-size:13px}.bar{height:8px;border-radius:4px;background:var(--bd);overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--ac)}.tabs,.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}button{font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:20px;padding:6px 14px}button.on{background:var(--ac);border-color:var(--ac);color:#001;font-weight:600}.tabs button{flex:1;border-radius:10px}.c{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0}.nav{display:flex;align-items:center;justify-content:space-between;gap:8px}div.t{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--bd);cursor:pointer}div.t:first-of-type{border-top:0}input[type=checkbox]{width:24px;height:24px;margin:2px 0 0;accent-color:var(--ac);flex:none;pointer-events:none}.t.d .x{text-decoration:line-through;color:var(--ok)}.tm{font-size:12px;color:var(--mu)}.nt{font-size:13px;color:var(--mu);margin-top:3px;padding-left:8px;border-left:2px solid var(--ac)}.tg{display:inline-block;font-size:12px;font-weight:600;color:#001;border-radius:4px;padding:0 6px;margin-right:6px}textarea,select,input:not([type=checkbox]){font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:6px 8px}.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:10px 0;text-align:center}.cal i{font-style:normal;font-size:13px;color:var(--mu);padding:6px 0}.cal i.off{color:var(--bd)}.dy{padding:10px 0;border-radius:10px;border:1px solid transparent;cursor:pointer}.dy.part{border-color:var(--ac)}.dy.all{background:var(--ac);color:#001;font-weight:600}.dy.tdy{text-decoration:underline}.dy.sel{outline:2px solid var(--tx)}
+</style></head><body><div class="w"><h1>高考冲刺计划</h1><div class="mu" id="cd"></div><div class="bar"><i id="pb"></i></div><div class="mu" id="pt"></div><div class="tabs" id="tabs"></div><div id="v"></div></div>
+<script>
+const SUB={数:"#2dd4cf",物:"#2dd4cf",化:"#2dd4cf",政:"#2dd4cf",语:"#2dd4cf",英:"#2dd4cf",综:"#2dd4cf"};
+const sp=s=>s.split("、");
+const C={数:sp("对数函数与ln专项(重点突破)、函数图像与变换、函数零点与方程根、导数概念与运算、导数·单调性、导数·极值与最值、导数·恒成立与参数、三角函数图像性质、三角恒等变换、解三角形、平面向量、复数、数列·等差等比、数列·求和与递推、立体几何初步、空间向量与立几、直线与圆、椭圆、双曲线与抛物线、计数原理、概率与分布列、统计与回归"),物:sp("自由落体(后半)与竖直上抛、运动图像、追及相遇、受力分析与平衡、牛顿运动定律、传送带与板块、曲线运动与平抛、圆周运动、万有引力、功能关系与动能定理、机械能守恒、动量守恒与碰撞、振动与波、静电场、恒定电流与实验、磁场与带电粒子、电磁感应、交变电流、热学、光学与近代物理"),化:sp("离子共存与离子检验、氧化还原反应、钠及其化合物、氯及其化合物、铁及其化合物、硫氮及其化合物、原子结构与周期律、化学键、反应热与盖斯定律、反应速率、化学平衡、电离与水解、沉淀溶解平衡、电化学、晶体与分子结构、有机基础、烃与衍生物、有机合成、化学实验与流程题"),政:sp("必修一第3课(收尾)+思维导图、必修一第4课、必修二·基本经济制度、必修二·市场经济与分配、必修三·党的领导与人民民主、必修三·依法治国、必修四·唯物论与认识论、必修四·辩证法与唯物史观、必修四·文化、选必一·国际政治经济、选必二·民事权利与婚姻就业、选必二·纠纷解决、选必三·逻辑与思维")};
+const SP={数:sp("导数·恒成立与零点(约18%)、解析几何·圆锥曲线(18-22%)、三角与解三角形、立体几何·空间角与折叠、概率统计·分布列与递推、数列·递推与放缩、抽象函数·对称周期压轴、选填压轴·创新题"),物:sp("力学·运动与受力综合(约45%)、力学·动量与能量碰撞、圆周·平抛·万有引力、电磁·带电粒子(几何作图)、电磁感应·图象与力电综合、实验·电学与力学实验、热光原·选择题全覆盖、压轴·多过程大综合"),化:sp("反应原理·平衡图像与Ksp(约30%)、实验流程题·滴定与计算(约30%)、有机·合成与同分异构(18%)、物质结构·晶胞与键、电化学·新型电池、陌生信息提取·工艺流程、真题大题限时"),政:sp("哲学与文化(28%)、经济与社会(26%)、政治与法治(21%)、法律与生活(16%)、国政经与逻辑(9%)、图表题·材料分析、真题限时+时政")};
+const SC=sp("D-J 补背与默写、K-L、M-N、O-Q、R-S、T-W、X-Z、A-Z 总复习"),ZS=sp("作文素材·积累一组+仿写一段、古诗文·名句默写、成语与病句·整理错题、时事素材·摘抄点评"),YY=sp("现代文阅读(《一本》1篇)+归纳题干、古诗文·断句翻译+古诗鉴赏、语言文字运用·成语/病句/修辞、作文·审题立意+提纲练习"),EE=sp("阅读+七选五(陶然)、语法填空专项、长难句1200·10句、应用文写作1篇(可用四六级高分表达)、读后续写1篇"),TY=sp("听力真题1套(限时)+精听错句、听力专项·精听10分钟+跟读、听力·错题回听+速记"),ZZ=sp("选择题训练(含图表题)、整理必修知识框架+背诵、综合题·材料分析限时、错题复盘"),LV=["基础题+整理笔记","中档题+错题","中档偏上+错题复盘"];
+const PH=[["11/19–12/21","一轮攻坚","四门主课网课看完主线+基础/中档题;语文实词、英语词汇/听力/作文不断线;数学补强log与ln","2026-11-19","2026-12-21"],["12/22–2/28","一轮收尾+专题","补缺网课、中档偏上;按分值占比做专题;寒假保持作息","2026-12-22","2027-02-28"],["3/1–4/30","二轮专题+真题","重点:力学约45%、反应原理约30%、导数/解几、哲学/经济;真题分类训练","2027-03-01","2027-04-30"],["5/1–6/6","套卷循环","套卷→复盘→套卷→复盘→专项→新一轮;回归错题本与背诵,调整作息","2027-05-01","2027-06-06"]];
+const p2=n=>String(n).padStart(2,"0"),fmt=d=>d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
+const N={};
+`对数函数与ln专项|定义域先求；换底公式与ln运算性质；比大小常借中间值0、1
+函数图像与变换|平移伸缩的先后顺序易错；抓特殊点、渐近线、奇偶性
+导数概念与运算|复合函数求导别漏乘内层导数；切线问题先设切点
+导数·单调性|先写定义域；按导数零点及其大小分类讨论；区间端点别漏
+导数·极值与最值|极值点两侧须变号；最值要比较端点值
+导数·恒成立与参数|分离参数还是分类讨论要先判断；洛必达不能直接写在答案里
+解析几何·圆锥曲线|占18-22%；设点设线策略；韦达定理后化简易错；定点定值
+立体几何·空间角与折叠|折叠前后不变量；建系要准
+自由落体|先规定正方向；竖直上抛有上升和下落两种情形；加速度恒为g
+运动图像|v-t看斜率和面积；x-t斜率是速度；交点的含义
+牛顿运动定律|弹簧与绳的瞬时性不同；超重失重；连接体整体隔离
+万有引力|黄金代换GM=gR²；变轨前后速度比较；近地、同步、赤道物体区分
+力学·运动与受力综合|占比约45%；先画受力图再列式
+离子共存与离子检验|共存看沉淀、气体、弱电解质、氧化还原、络合；注意酸碱性和无色条件
+反应原理·平衡图像与Ksp|占比约30%；图象先看趋势与拐点；K与Q比较
+电化学·新型电池|判断正负极；离子迁移方向；电子不经过电解质溶液
+有机·合成与同分异构|条件写全；同分异构按序查找
+必修一第3课|社会主义理论发展的时间线；关键人物与理论成果
+唯物论与认识论|物质与意识；实践与认识；原理和方法不要混用
+辩证法与唯物史观|联系、发展、矛盾；量变质变；社会存在决定社会意识
+现代文阅读|概括观点先找中心句；赏析题答手法加效果
+断句翻译|先抓虚词和句末；标出人名官职；翻译关键字落实
+阅读+七选五|先看选项主题句和段首段尾；注意代词指代和逻辑连接词
+听力|预读选项抓关键词；注意转折、数字、时间；错句反复精听
+周复盘|统计各科错题数；调整下周重点`.split("\n").forEach(l=>{const i=l.indexOf("|");if(i>0)N[l.slice(0,i)]=l.slice(i+1)});
+const NK=Object.keys(N).sort((a,b)=>b.length-a.length),nt=x=>{const k=NK.find(k=>x.tx.includes(k));return k?`<div class="nt">要点：${N[k]}</div>`:""};
+const WD="日一二三四五六",days=[],by={};let ptr={数:0,物:0,化:0,政:0},cnt={},cy={},ec=0;
+const nx=(k,a)=>{cy[k]=cy[k]||0;return a[cy[k]++%a.length]};
+const V1=["数","化","数","化","数","物","数"],V2=["物","政","物","政","化","政","物"],S2=["语","英","语","英","语","英"],S4=["物","化","物","化","物","化"],S5=["化","物","化","物","化","物"],S6=["政","英","语","政","英","语"],S7=["英","物","英","化","英","语"];
+for(let t=new Date(2026,10,19);t<=new Date(2027,5,6);t.setDate(t.getDate()+1)){
+const ds=fmt(t),w=(t.getDay()+6)%7,ph=ds<="2026-12-21"?1:ds<="2027-02-28"?2:ds<="2027-04-30"?3:4,L=[];
+const add=(tm,s,tx,f)=>L.push({id:ds+"#"+L.length,tm,s,tx,f});
+const V=s=>ph<3&&ptr[s]<C[s].length?(cnt[s]=0,"看课:"+C[s][ptr[s]++]):ph<3?"补缺网课+错题回看(按错题定位)":"晨间错题回看+要点速记";
+const P=s=>ph==1?LV[Math.min((cnt[s]=(cnt[s]||0)+1)-1,2)]+":"+C[s][Math.max(0,ptr[s]-1)]:ph<4?"专题:"+nx("s"+s,SP[s])+"+错题":"套卷/真题限时→复盘→错题";
+const O=s=>s=="政"?(ph<4?nx("zz",ZZ):"政治真题限时+时政"):s=="英"?nx("ee",EE):nx("yy",YY);
+if(w<6){add("04:20–05:25",V1[w],V(V1[w]),1);add("05:25–06:30",V2[w],V(V2[w]),1);add("11:40–12:20",S2[w],S2[w]=="语"?"实词背诵:"+nx("sc",SC):"维克多词汇 第"+(++ec)+"天+默写");add("12:40–14:20","数",P("数"));add("17:45–19:00",S4[w],P(S4[w]));add("19:00–20:30",S5[w],P(S5[w]));add("20:30–22:00",S6[w],O(S6[w]));add("22:45–23:30",S7[w],S7[w]=="英"?"听力:"+nx("ty",TY):S7[w]=="语"?"语文素材:"+nx("zs",ZS):V(S7[w]),1)}
+else{add("04:20–05:35","数",V("数"),1);add("05:35–06:50","物",V("物"),1);add("11:45–13:00","英",ph==4?"英语套卷(含听力105分钟)":"英语限时:"+nx("ee",EE));add("13:00–14:30","数","数学综合+错题:"+P("数"));add("17:25–19:00","综","周复盘:整理本周错题,检查勾选,调整下周");add("19:00–20:30","化",P("化"));add("20:30–22:00","物",P("物"));add("22:45–23:30","综","确认下周计划,早睡",1)}
+days.push({ds,w,ph,L});by[ds]=L}
+const first=days[0].ds,last=days[days.length-1].ds,now=new Date(),td=fmt(now);let D={},X={},dbR=null,tm,tab="d",cur=td<first?first:td>last?last:td,wk=cur,sj="数",cm=cur.slice(0,7);
+try{D=JSON.parse(localStorage.getItem("gk27")||"{}");X=JSON.parse(localStorage.getItem("gk27x")||"{}")}catch(e){}
+function save(){try{localStorage.setItem("gk27",JSON.stringify(D));localStorage.setItem("gk27x",JSON.stringify(X))}catch(e){}}
+const sh=(ds,n)=>{const d=new Date(ds+"T00:00");d.setDate(d.getDate()+n);return fmt(d)},mon=ds=>{const d=new Date(ds+"T00:00");return sh(ds,-((d.getDay()+6)%7))},md=ds=>+ds.slice(5,7)+"/"+ +ds.slice(8),wd=ds=>"周"+WD[new Date(ds+"T00:00").getDay()],all=days.flatMap(d=>d.L),cnum=a=>a.filter(x=>D[x.id]).length;
+function row(x){const k=D[x.id];return `<div class="t ${k?"d":""}" data-k="${x.id}"><input type="checkbox" tabindex="-1" ${k?"checked":""}><span class="x"><span class="tm">${x.tm}</span><br><span class="tg" style="background:${SUB[x.s]}" >${x.s}</span>${x.tx}${nt(x)}</span></div>`}
+const pr=(a,b)=>`<div class="bar"><i style="width:${b?100*a/b:0}%"></i></div>`;
+function cal(){const y=+cm.slice(0,4),m=+cm.slice(5)-1,n=new Date(y,m+1,0).getDate(),o=(new Date(y,m,1).getDay()+6)%7;let h=`<div class="nav"><button data-c="-1">‹</button><b>${y}年${m+1}月</b><button data-c="1">›</button></div><div class="cal">`+ [..."一二三四五六日"].map(w=>`<i>${w}</i>`).join("")+"<i></i>".repeat(o);for(let d=1;d<=n;d++){const ds=y+"-"+p2(m+1)+"-"+p2(d),L=by[ds];if(!L){h+=`<i class="off">${d}</i>`;continue}const E=X[ds]||[],k=cnum(L.concat(E)),c=k==L.length+E.length?"all":k?"part":"";h+=`<span class="dy ${c} ${ds==cur?"sel":""} ${ds==td?"tdy":""}" data-c2="${ds}">${d}</span>`}return h+`</div><div class="mu">点日期查看当天任务。实心=全部完成，描边=部分完成，下划线=今天。</div>`}
+const BK=`<div class="c"><b>备份与恢复</b><div class="mu">记录保存在本机浏览器里。换设备或清理浏览器前，先导出并保存文字；新设备粘贴后再导入。</div><textarea id="bk" rows="4" style="width:100%;margin-top:8px"></textarea><div style="display:flex;gap:8px;margin-top:8px"><button data-ex="1">导出</button><button data-im="1">导入</button></div></div>`;
+function R(){const dn=cnum(all),cd=Math.ceil((new Date(2027,5,6)-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);cd_.textContent="距高考 "+cd+" 天 · 目标670";pb.style.width=100*dn/all.length+"%";pt.textContent="总进度 "+dn+" / "+all.length;tabs.innerHTML=[["a","总计划"],["w","周计划"],["d","日计划"],["c","日历"]].map(x=>`<button data-t="${x[0]}" class="${tab==x[0]?"on":""}">${x[1]}</button>`).join("");let h="";
+if(tab=="a"){h=PH.map(p=>{const a=all.filter(x=>x.id.slice(0,10)>=p[3]&&x.id.slice(0,10)<=p[4]),n=cnum(a);return `<div class="c"><b>${p[1]}</b> <span class="mu">${p[0]}</span><div class="mu">${p[2]}</div>${pr(n,a.length)}<span class="mu">${n} / ${a.length}</span></div>`}).join("")+`<div class="c"><b>各科进度</b>${Object.keys(SUB).map(s=>{const a=all.filter(x=>x.s==s);return `<div style="margin-top:8px"><span class="tg" style="background:${SUB[s]}">${s}</span><span class="mu">${cnum(a)} / ${a.length}</span>${pr(cnum(a),a.length)}</div>`}).join("")}</div>`}
+else if(tab=="w"){const m=mon(wk),ws=days.filter(d=>d.ds>=m&&d.ds<=sh(m,6)),a=ws.flatMap(d=>d.L.concat(X[d.ds]||[]).filter(x=>x.s==sj));h=`<div class="nav"><button data-m="-7">‹</button><b>${md(m)} – ${md(sh(m,6))}</b><button data-m="7">›</button></div><div class="chips">${Object.keys(SUB).map(s=>`<button data-s="${s}" class="${sj==s?"on":""}">${s}</button>`).join("")}</div><div class="mu">本周${sj}:${cnum(a)} / ${a.length}</div>`+ws.map(d=>{const l=d.L.concat(X[d.ds]||[]).filter(x=>x.s==sj);return `<div class="c"><b>${md(d.ds)} ${wd(d.ds)}</b>${d.ds==td?" <span class='tg' style='background:var(--ac);color:#001'>今天</span>":""}${l.length?l.map(row).join(""):"<div class='mu'>今日无此科安排</div>"}</div>`}).join("")}
+else if(tab=="c")h=cal();else{const d=days.find(x=>x.ds==cur);if(d){const A=d.L.concat(X[cur]||[]),n=cnum(A);h=`<div class="nav"><button data-d="-1">‹</button><b>${md(cur)} ${wd(cur)}${cur==td?"(今天)":""}</b><button data-d="1">›</button></div><div class="mu">${PH[d.ph-1][1]} · 今日 ${n} / ${A.length}　<a href="#" data-today="1" style="color:var(--ac)">回到今天</a></div>${pr(n,A.length)}<div class="c">${A.map(row).join("")}</div><div class="c"><b>补充任务</b><div style="display:flex;gap:6px;margin-top:8px"><select id="as">${Object.keys(SUB).map(s=>`<option>${s}</option>`).join("")}</select><input id="at" placeholder="输入任务，如：数学错题重做" style="flex:1;min-width:0"><button data-add="1">添加</button></div></div><div class="mu">早晨与 22:45 后可用手机(看课/听力)，其余时段无手机，做题与背诵。</div>`}};
+if(tab=="a")h+=BK;v.innerHTML=h}
+document.addEventListener("click",e=>{const t=e.target,b=a=>t.closest("["+a+"]");let x;if(!b("data-del")&&(x=b("data-k"))){const k=x.dataset.k;if(D[k])delete D[k];else D[k]=1;save();R();return}if(x=b("data-t")){tab=x.dataset.t;if(tab=="c")cm=cur.slice(0,7)}else if(x=b("data-c2")){cur=x.dataset.c2;tab="d";wk=cur}else if(x=b("data-c")){const k=fmt(new Date(+cm.slice(0,4),+cm.slice(5)-1+ +x.dataset.c,1)).slice(0,7);if(k>=first.slice(0,7)&&k<=last.slice(0,7))cm=k}else if(x=b("data-s"))sj=x.dataset.s;else if(x=b("data-m")){const n=sh(mon(wk),+x.dataset.m);if(n>=mon(first)&&n<=last)wk=n}else if(x=b("data-d")){const n=sh(cur,+x.dataset.d);if(n>=first&&n<=last)cur=n}else if(b("data-today")){e.preventDefault();cur=td<first?first:td>last?last:td}else if(b("data-ex")){const a=document.getElementById("bk");a.value=JSON.stringify({done:D,extra:X});a.select();try{navigator.clipboard.writeText(a.value).catch(()=>{})}catch(y){}}else if(b("data-im")){try{const q=JSON.parse(document.getElementById("bk").value);Object.assign(D,q.done||{});for(const k in q.extra||{})X[k]=q.extra[k];save()}catch(y){pt.textContent="导入失败：内容格式不对";return}}else if(b("data-add")){const i=document.getElementById("at"),s=document.getElementById("as").value,tx=i.value.trim().replace(/[&<>"]/g,"");if(!tx)return;(X[cur]=X[cur]||[]).push({id:"x"+Date.now(),tm:"补充",s,tx,u:1});save()}else return;R()});
+const cd_=document.getElementById("cd"),pb=document.getElementById("pb"),pt=document.getElementById("pt"),tabs=document.getElementById("tabs"),v=document.getElementById("v");
+if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});onerror=m=>{pt.textContent="页面出错："+m};R();
+</script></body></html>
